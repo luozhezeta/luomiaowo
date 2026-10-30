@@ -1,0 +1,15 @@
+[Unit]
+Description=Route Let's Encrypt ACME traffic via the VPC gateway (bypass oray_vnc 172.0.0.0/8)
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+# 向日葵（oray_vnc）会加一条 172.0.0.0/8 的路由，把 172.65.x.x（Let's Encrypt 的
+# 生产与 staging 端点都在 Cloudflare 的 172.64.0.0/13 里）也吞进虚拟网卡，
+# 导致 certbot 报 "Network is unreachable"。用更具体的 /13 覆盖掉。
+ExecStart=/usr/sbin/ip route replace 172.64.0.0/13 via 10.2.0.1 dev eth0
+
+[Install]
+WantedBy=multi-user.target

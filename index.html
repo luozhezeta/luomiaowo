@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="color-scheme" content="dark light" />
+    <meta name="theme-color" content="#08131f" />
+    <meta name="description" content="洛哲的个人主页：前端工程师、独立开发者，做一些 Web 界面和小工具。" />
+    <link rel="canonical" href="https://luozhe.link/" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://luozhe.link/" />
+    <meta property="og:title" content="洛哲 · 个人主页" />
+    <meta property="og:description" content="前端工程师、独立开发者，做一些 Web 界面和小工具。" />
+    <meta name="twitter:card" content="summary" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <title>洛哲 · 个人主页</title>
+    <script>
+      (function () {
+        try {
+          var query = new URLSearchParams(location.search).get("theme");
+          var stored = localStorage.getItem("luozhe-theme");
+          var theme = query === "light" || query === "dark" ? query : stored;
+          if (theme !== "light" && theme !== "dark") {
+            theme = matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark";
+          }
+          document.documentElement.dataset.theme = theme;
+        } catch (error) {
+          document.documentElement.dataset.theme = "dark";
+        }
+      })();
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
