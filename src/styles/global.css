@@ -34,7 +34,7 @@
   --blob-1: #17608f;
   --blob-2: #0d3a5c;
   --blob-3: #45389e;
-  --photo-scrim: linear-gradient(180deg, rgb(8 13 21 / 0.5), rgb(8 13 21 / 0.82));
+  --photo-scrim: linear-gradient(180deg, rgb(8 13 21 / 0.58), rgb(8 13 21 / 0.86));
 
   --r-card: 8px;
   --r-ctl: 4px;

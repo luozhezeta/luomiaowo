@@ -1,5 +1,5 @@
 // 由 scripts/gen-backgrounds.mjs 自动生成，请勿手动修改
 export const backgroundsByOrientation = {
-  landscape: [],
-  portrait: [],
+  landscape: ["/backgrounds/landscape/01.webp", "/backgrounds/landscape/02.webp", "/backgrounds/landscape/03.webp", "/backgrounds/landscape/04.webp", "/backgrounds/landscape/05.webp", "/backgrounds/landscape/06.webp", "/backgrounds/landscape/07.webp", "/backgrounds/landscape/08.webp", "/backgrounds/landscape/09.webp", "/backgrounds/landscape/10.webp", "/backgrounds/landscape/11.webp", "/backgrounds/landscape/12.webp", "/backgrounds/landscape/13.webp", "/backgrounds/landscape/14.webp", "/backgrounds/landscape/15.webp", "/backgrounds/landscape/16.webp", "/backgrounds/landscape/17.webp", "/backgrounds/landscape/18.webp", "/backgrounds/landscape/19.webp", "/backgrounds/landscape/20.webp", "/backgrounds/landscape/21.webp", "/backgrounds/landscape/22.webp"],
+  portrait: ["/backgrounds/portrait/01.webp", "/backgrounds/portrait/02.webp", "/backgrounds/portrait/03.webp", "/backgrounds/portrait/04.webp", "/backgrounds/portrait/05.webp", "/backgrounds/portrait/06.webp", "/backgrounds/portrait/07.webp", "/backgrounds/portrait/08.webp"],
 } as const;
