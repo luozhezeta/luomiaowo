@@ -1,9 +1,15 @@
-import { backgroundFiles } from "./backgrounds.generated";
+import { backgroundsByOrientation } from "./backgrounds.generated";
 
-export const backgrounds: string[] = [...backgroundFiles];
+export type Orientation = "landscape" | "portrait";
 
-/** 每次加载随机挑一张；没有图片时返回 null，页面保持渐变背景。 */
-export function pickBackground(): string | null {
-  if (backgrounds.length === 0) return null;
-  return backgrounds[Math.floor(Math.random() * backgrounds.length)];
+/** 两套图库：横屏用 landscape，竖屏用 portrait */
+export const backgrounds = backgroundsByOrientation;
+
+/** 按屏幕方向挑图；某一侧为空时退回另一侧，两边都空则返回 null。 */
+export function pickBackground(orientation: Orientation): string | null {
+  const primary = backgroundsByOrientation[orientation];
+  const fallback = backgroundsByOrientation[orientation === "landscape" ? "portrait" : "landscape"];
+  const pool = primary.length > 0 ? primary : fallback;
+  if (pool.length === 0) return null;
+  return pool[Math.floor(Math.random() * pool.length)];
 }

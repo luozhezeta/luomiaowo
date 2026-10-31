@@ -33,17 +33,23 @@ pnpm preview
 
 ## 随机背景图
 
-每次打开页面随机换一张壁纸，不做实时轮换。
+每次打开页面随机换一张壁纸，横屏和竖屏各用一套图库。
 
-1. 把图片放进 `public/backgrounds/`（`.webp` / `.avif` / `.jpg` / `.png`）
+```
+public/backgrounds/
+  landscape/   # 横屏用（电脑、横放的平板）
+  portrait/    # 竖屏用（手机）
+```
+
+1. 按方向把图片丢进对应目录（`.webp` / `.avif` / `.jpg` / `.png`）
 2. 运行 `pnpm backgrounds` 生成清单（`pnpm dev` 和 `pnpm build` 会自动跑）
 3. 刷新页面，每次加载随机一张
 
-图片建议：宽 2400–2560px、单张 ≤300KB、文件名用英文数字（例如 `01.webp`）。没有图片时页面保持原来的渐变背景。
+选图规则：竖屏（宽 < 高）只从 `portrait/` 里挑，横屏只从 `landscape/` 里挑；如果某一侧是空的，会退回到另一侧，两边都空就保持原来的渐变背景。移动端旋转屏幕时会自动换成新方向的图库。
 
-实现：`scripts/gen-backgrounds.mjs` 扫描目录生成 `src/data/backgrounds.generated.ts`；`src/hooks/useBackground.ts` 在加载时随机挑一张并预加载，完成后淡入（0.9s）。有图片时侧栏会自动改用不透明底色，渐变光斑降到 0.22，避免照片从面板里透出来干扰阅读。
+图片建议：横图 2400–2560px 宽、竖图 1200×2000 左右、单张 ≤300KB、文件名用英文数字。图片会随仓库提交，张数多了注意体积。
 
-图片会随仓库一起提交，张数多了注意体积；超过 ~50MB 再考虑对象存储或 Git LFS。
+实现：`scripts/gen-backgrounds.mjs` 扫描两个目录生成 `src/data/backgrounds.generated.ts`；`src/hooks/useBackground.ts` 根据 `matchMedia("(orientation: portrait)")` 选库、预加载完成后淡入（0.9s），并监听旋转。有图片时侧栏自动改用不透明底色，渐变光斑降到 0.22。
 
 ## 目录
 
