@@ -25,6 +25,11 @@
   contain: paint;
 }
 
+/* 有随机背景图时，侧栏改用不透明底色 */
+.has-photo .sidebar {
+  background: var(--surface-solid);
+}
+
 .sidebar__brand {
   display: flex;
   align-items: center;

@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useState, type CSSProperties } from "react";
 import { MobileHeader } from "./components/MobileHeader";
 import { Sidebar } from "./components/Sidebar";
 import { Footer } from "./components/Footer";
@@ -6,6 +6,7 @@ import { PanelLeftIcon } from "./components/Icons";
 import { PlaceholderPage } from "./pages/PlaceholderPage";
 import { ProfilePage } from "./pages/ProfilePage";
 import { ThanksPage } from "./pages/ThanksPage";
+import { useBackground } from "./hooks/useBackground";
 import { Link, usePath } from "./router";
 import { matchRoute } from "./routes";
 
@@ -36,6 +37,7 @@ export default function App() {
   const route = matchRoute(path);
   const [menuOpen, setMenuOpen] = useState(false);
   const [collapsed, setCollapsed] = useState(readCollapsed);
+  const { url: backgroundUrl, ready: backgroundReady } = useBackground();
 
   const closeMenu = useCallback(() => setMenuOpen(false), []);
 
@@ -62,9 +64,26 @@ export default function App() {
     };
   }, [menuOpen]);
 
+  // 有背景图时侧栏改成不透明，避免条纹/照片从半透明面板里透出来
+  useEffect(() => {
+    document.documentElement.classList.toggle("has-photo", backgroundReady);
+    return () => {
+      document.documentElement.classList.remove("has-photo");
+    };
+  }, [backgroundReady]);
+
   return (
     <>
-      <div className="backdrop" aria-hidden="true">
+      <div
+        className={backgroundReady ? "backdrop has-photo" : "backdrop"}
+        aria-hidden="true"
+        style={
+          backgroundUrl
+            ? ({ "--bg-photo": `url("${backgroundUrl}")` } as CSSProperties)
+            : undefined
+        }
+      >
+        <span className="backdrop__photo" />
         <span className="blob blob--1" />
         <span className="blob blob--2" />
         <span className="blob blob--3" />

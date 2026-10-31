@@ -31,6 +31,20 @@ pnpm preview
 
 路由是手写的，没有引入 react-router：`src/router.tsx` 用 `history.pushState` + 自定义事件，`Link` 组件负责拦截点击。部署时需要把未知路径回退到 `index.html`（nginx 的 `try_files` 已经配好）。本地用 `python scripts/preview.py 5173` 预览时也带了同样的回退。
 
+## 随机背景图
+
+每次打开页面随机换一张壁纸，不做实时轮换。
+
+1. 把图片放进 `public/backgrounds/`（`.webp` / `.avif` / `.jpg` / `.png`）
+2. 运行 `pnpm backgrounds` 生成清单（`pnpm dev` 和 `pnpm build` 会自动跑）
+3. 刷新页面，每次加载随机一张
+
+图片建议：宽 2400–2560px、单张 ≤300KB、文件名用英文数字（例如 `01.webp`）。没有图片时页面保持原来的渐变背景。
+
+实现：`scripts/gen-backgrounds.mjs` 扫描目录生成 `src/data/backgrounds.generated.ts`；`src/hooks/useBackground.ts` 在加载时随机挑一张并预加载，完成后淡入（0.9s）。有图片时侧栏会自动改用不透明底色，渐变光斑降到 0.22，避免照片从面板里透出来干扰阅读。
+
+图片会随仓库一起提交，张数多了注意体积；超过 ~50MB 再考虑对象存储或 Git LFS。
+
 ## 目录
 
 ```
