@@ -1,10 +1,13 @@
+export type CreditGroup = "tech" | "art";
+
 export interface CreditAccount {
   label: string;
-  href: string;
+  href?: string;
 }
 
 export interface CreditWork {
-  title: string;
+  /** 有正式标题时才填；未知留空，只展示图片 */
+  title?: string;
   image?: string;
   href?: string;
   note?: string;
@@ -14,6 +17,9 @@ export interface CreditAuthor {
   id: string;
   name: string;
   role: string;
+  group: CreditGroup;
+  /** 卡片上的补充介绍，有内容时卡片会变宽 */
+  tagline?: string;
   /** 头像图片；没有时用 initial 生成字母头像 */
   avatar?: string;
   initial: string;
@@ -22,100 +28,106 @@ export interface CreditAuthor {
   note?: string;
 }
 
+export const creditGroups: { id: CreditGroup; title: string }[] = [
+  { id: "tech", title: "技术支持" },
+  { id: "art", title: "背景图" },
+];
+
 export const creditAuthors: CreditAuthor[] = [
   {
+    id: "chuzoux",
+    name: "chuzouX",
+    role: "一只出走离开世界",
+    group: "tech",
+    tagline:
+      "接下来出场的是1301技术骨干，音游主理人，王者发育路制裁者，程序与人机具象化呈现体，本站创作天使投资人（非经济层面）",
+    avatar: "/avatars/chuzoux.webp",
+    initial: "C",
+    accounts: [{ label: "个人主页", href: "https://chuzoux.top/" }],
+    works: [],
+  },
+  {
+    id: "deepseek",
+    name: "DeepSeek",
+    role: "AI 模型支持",
+    group: "tech",
+    avatar: "/avatars/deepseek.webp",
+    initial: "D",
+    accounts: [
+      { label: "官网", href: "https://www.deepseek.com/" },
+      { label: "对话", href: "https://chat.deepseek.com/" },
+    ],
+    works: [],
+  },
+  {
     id: "vsinger",
-    name: "上海禾念 / Vsinger",
-    role: "官方插画与角色版权",
-    initial: "禾",
+    name: "Vsinger 官方",
+    role: "官方插画与版权方",
+    group: "art",
+    avatar: "/avatars/vsinger.webp",
+    initial: "V",
     accounts: [
       { label: "Vsinger 官网", href: "https://vsinger.com/" },
       { label: "B 站 @Vsinger", href: "https://space.bilibili.com/3235718" },
     ],
-    works: [],
-    note: "本站背景图库中带 ©洛天依 / ©SHANGHAI HENIAN 水印的图片，版权归上海禾念信息科技有限公司所有，仅作个人主页装饰使用。",
+    works: [
+      { image: "/backgrounds/landscape/03.webp" },
+      { image: "/backgrounds/landscape/07.webp" },
+      { image: "/backgrounds/landscape/12.webp" },
+      { image: "/backgrounds/landscape/14.webp" },
+      { image: "/backgrounds/landscape/15.webp" },
+      { image: "/backgrounds/landscape/16.webp" },
+    ],
+    note: "图库中带 ©洛天依 / ©SHANGHAI HENIAN 水印的官方插画，版权归上海禾念信息科技有限公司所有，仅作个人主页装饰使用。",
   },
   {
     id: "tid",
     name: "TID",
     role: "插画师 · 洛天依官方绘师",
+    group: "art",
     avatar: "/avatars/tid.webp",
     initial: "T",
     accounts: [{ label: "Pixiv 418969", href: "https://www.pixiv.net/users/418969" }],
     works: [
       {
-        title: "恭贺新禧",
         image: "/backgrounds/landscape/01.webp",
         href: "https://www.pixiv.net/artworks/66987311",
-        note: "2018 新年贺图，本站用作桌面背景",
       },
-      {
-        title: "白",
-        image: "/backgrounds/landscape/18.webp",
-        note: "官图文件夹收录 · 名称暂拟",
-      },
-      {
-        title: "花灯",
-        image: "/backgrounds/landscape/19.webp",
-        note: "官图文件夹收录 · 名称暂拟",
-      },
-      {
-        title: "四叶草",
-        image: "/backgrounds/landscape/20.webp",
-        note: "官图文件夹收录 · 名称暂拟",
-      },
-      {
-        title: "星夜",
-        image: "/backgrounds/landscape/21.webp",
-        note: "官图文件夹收录 · 名称暂拟",
-      },
-      {
-        title: "泡泡",
-        image: "/backgrounds/landscape/22.webp",
-        note: "官图文件夹收录 · 名称暂拟",
-      },
-    ],
-    note: "官图文件夹里有 5 张标了 TID 的作品，分别是白裙、花灯、四叶草、星夜、泡泡这五张；加上《恭贺新禧》，共 6 张收录在本站图库。",
-  },
-  {
-    id: "ideolo",
-    name: "ideolo",
-    role: "插画师 · 洛天依角色设定",
-    initial: "i",
-    accounts: [{ label: "Pixiv 61513", href: "https://www.pixiv.net/users/61513" }],
-    works: [
-      {
-        title: "⭐洛天依-10th⭐",
-        href: "https://www.pixiv.net/artworks/99673005",
-        note: "洛天依十周年贺图（2022）",
-      },
-    ],
-    note: "VOCALOID CHINA PROJECT 洛天依 / 乐正绫角色设定参与者，neko work 共同创立者。",
-  },
-  {
-    id: "dragon",
-    name: "ドラゴン",
-    role: "插画师 · 别名 dragon修罗",
-    initial: "ド",
-    accounts: [{ label: "Pixiv 12501628", href: "https://www.pixiv.net/users/12501628" }],
-    works: [
-      {
-        title: "桜 洛天依",
-        href: "https://www.pixiv.net/artworks/59477657",
-        note: "樱花与校服，本站曾用作参考",
-      },
+      { image: "/backgrounds/landscape/18.webp" },
+      { image: "/backgrounds/landscape/19.webp" },
+      { image: "/backgrounds/landscape/20.webp" },
+      { image: "/backgrounds/landscape/21.webp" },
+      { image: "/backgrounds/landscape/22.webp" },
     ],
   },
   {
-    id: "unknown",
-    name: "来源待确认",
-    role: "未登记的转载图",
-    initial: "?",
-    accounts: [],
-    works: [
-      { title: "竖图 · 线稿", image: "/backgrounds/portrait/01.webp", note: "抖音来源，作者未知" },
-      { title: "横图 · 场景", image: "/backgrounds/landscape/02.webp", note: "抖音来源，作者未知" },
+    id: "xunxiaolin",
+    name: "珣小林",
+    role: "抖音创作者",
+    group: "art",
+    avatar: "/avatars/xunxiaolin.webp",
+    initial: "珣",
+    accounts: [
+      {
+        label: "抖音 · 珣小林^u^",
+        href: "https://www.douyin.com/user/MS4wLjABAAAAsIIdi1j-VchWnWoXTaX4GtXC-ba9HBDQ59_clhlZRxA",
+      },
     ],
-    note: "这些图片来自网络转载，暂未找到原作者。如果你知道出处，欢迎告诉我补上。",
+    works: [{ image: "/backgrounds/portrait/01.webp" }],
+  },
+  {
+    id: "roure",
+    name: "爱吃肉的鱼",
+    role: "抖音创作者",
+    group: "art",
+    avatar: "/avatars/roure.webp",
+    initial: "鱼",
+    accounts: [
+      {
+        label: "抖音 · 爱吃肉的鱼",
+        href: "https://www.douyin.com/user/MS4wLjABAAAAqHkm_pA8jP7DdVbus-A_wj-hWVqDkj4JmzOFZGV72us",
+      },
+    ],
+    works: [{ image: "/backgrounds/landscape/02.webp" }],
   },
 ];
