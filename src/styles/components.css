@@ -1789,3 +1789,37 @@
   background: var(--surface-4, var(--surface-3));
   color: var(--text);
 }
+
+/* 头像不参与压缩 */
+.credit-avatar {
+  flex: none;
+}
+
+.credit-wide__id {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+@media (max-width: 640px) {
+  .credit--wide {
+    flex-direction: column;
+    flex-wrap: nowrap;
+    height: auto;
+    overflow: visible;
+  }
+
+  .credit-wide__left {
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    flex: 0 0 auto;
+  }
+
+  .credit-wide__right {
+    width: 100%;
+    flex: 1 1 auto;
+  }
+}

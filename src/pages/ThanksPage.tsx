@@ -1,4 +1,4 @@
-﻿import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { creditAuthors, creditGroups, type CreditAuthor } from "../data/credits";
 import { ArrowUpRightIcon, CloseIcon } from "../components/Icons";
 
@@ -86,8 +86,10 @@ export function ThanksPage() {
                       <>
                         <span className="credit-wide__left">
                           <Avatar author={author} size={48} />
-                          <span className="credit__name">{author.name}</span>
-                          <span className="credit__role">{author.role}</span>
+                          <span className="credit-wide__id">
+                            <span className="credit__name">{author.name}</span>
+                            <span className="credit__role">{author.role}</span>
+                          </span>
                         </span>
                         <span className="credit-wide__right">
                           <span className="credit__tagline">{author.tagline}</span>
