@@ -10,12 +10,7 @@ export function About() {
           <p className="section__kicker">About</p>
           <h2 id="about-title">关于我</h2>
           <p className="about__text">
-            我关心界面的手感：点击之后多久有反馈、滚动是否跟手、深色模式下的那层灰是不是刚好。做设计出身的工程师，习惯先用
-            Figma 把 50 种方案试一遍，再写 200 行 CSS 把剩下的 49 种删掉。
-          </p>
-          <p className="about__text">
-            目前一个人维护几个小工具，业余时间写点前端与域名相关的东西。如果你有想做的界面，或者只是想聊聊
-            Win11 的亚克力为什么好看，欢迎来信。
+            一个普普通通的大学生，没什么出众的天赋，也没有什么特别远大的计划，只是在学习和探索自己能做些什么，能留下些什么，明天能继续创造什么，以及明确自己正在寻找独属于“我”的价值。
           </p>
           <div className="about__links">
             <a className="btn" href={`mailto:${site.email}`}>
