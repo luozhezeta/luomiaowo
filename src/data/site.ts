@@ -29,7 +29,7 @@ export const site = {
   status: "接受小项目合作",
   email: "luozhe520@yeah.net",
   qq: "3115124842",
-  github: "https://github.com/luozhe",
+  github: "https://github.com/luozhezeta",
   skills: ["TypeScript", "React", "Astro", "Tailwind CSS", "Node.js", "Figma", "Rust（学习中）"],
 };
 
