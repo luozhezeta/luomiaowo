@@ -6,3 +6,12 @@ dist/
 .ssh/
 *.local
 .DS_Store
+
+# Edge 无头浏览器临时配置 & 截图/脚本残留
+.ep-*/
+_*.png
+_*.ps1
+_*.json
+_*.txt
+_*.bak
+_*.css

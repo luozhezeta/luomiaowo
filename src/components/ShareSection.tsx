@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from "react";
-import { ArrowUpRightIcon, CloseIcon, PlayIcon } from "../components/Icons";
+import { ArrowUpRightIcon, CloseIcon, PlayIcon } from "./Icons";
 import { shareConfig, shareItems, type ShareItem, type ShareKind } from "../data/share";
 
 const platformLabels: Record<ShareItem["platform"], string> = {
@@ -68,7 +68,8 @@ function loadTwikoo(): Promise<void> {
   });
 }
 
-export function SharePage() {
+/** 首页里的分享板块：视频 / 音乐卡片 + 弹层播放 + 预留评论区 */
+export function ShareSection() {
   const [filter, setFilter] = useState<Filter>("all");
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const openerRef = useRef<HTMLElement | null>(null);
@@ -129,11 +130,9 @@ export function SharePage() {
   )}`;
 
   return (
-    <section className="share" aria-labelledby="share-title">
+    <section className="section share" id="share" aria-labelledby="share-title">
       <p className="section__kicker">Share</p>
-      <h1 className="share__title" id="share-title">
-        分享
-      </h1>
+      <h2 id="share-title">分享</h2>
       <p className="share__lede">看到的、听到的，觉得值得一看一听的都放这儿。想推荐什么，投稿给我。</p>
 
       <div className="share__bar">

@@ -12,14 +12,13 @@ import {
   HomeIcon,
   MailIcon,
   MoonIcon,
-  PlayIcon,
   SunIcon,
   UserIcon,
 } from "./Icons";
 
 const icons: Record<string, typeof HomeIcon> = {
   "/": HomeIcon,
-  "/share": PlayIcon,
+
   "/shudong": ChatIcon,
   "/games": GamepadIcon,
   "/profile": UserIcon,
