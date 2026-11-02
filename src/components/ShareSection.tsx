@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { ArrowUpRightIcon, CloseIcon, PlayIcon } from "./Icons";
+import { backgroundsByOrientation } from "../data/backgrounds.generated";
 import { shareConfig, shareItems, type ShareItem, type ShareKind } from "../data/share";
 
 const platformLabels: Record<ShareItem["platform"], string> = {
@@ -41,6 +42,160 @@ function playerSource(item: ShareItem): PlayerSource | null {
   return null;
 }
 
+/** 还没有内容时，用壁纸库的图先占住封面位 */
+function placeholderItems(): ShareItem[] {
+  const landscape = backgroundsByOrientation.landscape as readonly string[];
+  const portrait = backgroundsByOrientation.portrait as readonly string[];
+  const pick = (list: readonly string[], index: number) =>
+    list.length > 0 ? list[index % list.length] : undefined;
+
+  const videos: ShareItem[] = [3, 7, 12, 15].map((source, index) => ({
+    id: `placeholder-video-${index + 1}`,
+    kind: "video" as const,
+    title: `视频封面位 ${String(index + 1).padStart(2, "0")}`,
+    author: "等待上传",
+    platform: "bilibili" as const,
+    href: "",
+    cover: pick(landscape, source),
+    placeholder: true,
+  }));
+
+  const albums: ShareItem[] = [0, 2, 4, 6].map((source, index) => ({
+    id: `placeholder-album-${index + 1}`,
+    kind: "music" as const,
+    title: `专辑封面位 ${String(index + 1).padStart(2, "0")}`,
+    author: "等待上传",
+    platform: "netease" as const,
+    href: "",
+    cover: pick(portrait, source),
+    placeholder: true,
+  }));
+
+  return [...videos, ...albums];
+}
+
+function ShareCardBody({ item }: { item: ShareItem }) {
+  return (
+    <>
+      <span className="share-card__cover">
+        {item.cover ? <img src={item.cover} alt="" loading="lazy" decoding="async" /> : null}
+        <span className="share-card__badge">
+          {item.placeholder
+            ? `${kindLabels[item.kind]} · 待上传`
+            : `${kindLabels[item.kind]} · ${platformLabels[item.platform]}`}
+        </span>
+        {item.placeholder ? null : (
+          <span className="share-card__play" aria-hidden="true">
+            <PlayIcon width={20} height={20} />
+          </span>
+        )}
+      </span>
+      <span className="share-card__body">
+        <span className="share-card__title">{item.title}</span>
+        <span className="share-card__meta">
+          {item.author}
+          {item.date ? ` · ${item.date}` : ""}
+        </span>
+        {item.note ? <span className="share-card__note">{item.note}</span> : null}
+      </span>
+    </>
+  );
+}
+
+interface CarouselProps {
+  slides: ShareItem[];
+  onOpen: (item: ShareItem) => void;
+}
+
+/** 左侧大图轮播：自动切换、可点箭头/圆点，鼠标悬停暂停 */
+function ShareCarousel({ slides, onOpen }: CarouselProps) {
+  const [index, setIndex] = useState(0);
+  const [paused, setPaused] = useState(false);
+
+  useEffect(() => {
+    if (slides.length <= 1 || paused) return;
+    const timer = window.setInterval(() => {
+      setIndex((value) => (value + 1) % slides.length);
+    }, 5000);
+    return () => window.clearInterval(timer);
+  }, [slides.length, paused]);
+
+  useEffect(() => {
+    if (index >= slides.length) setIndex(0);
+  }, [index, slides.length]);
+
+  if (slides.length === 0) return null;
+  const current = slides[index] ?? slides[0];
+  const go = (delta: number) => setIndex((value) => (value + delta + slides.length) % slides.length);
+
+  return (
+    <div
+      className="carousel"
+      onMouseEnter={() => setPaused(true)}
+      onMouseLeave={() => setPaused(false)}
+    >
+      <div className="carousel__viewport">
+        {slides.map((slide, i) => (
+          <div key={slide.id} className={i === index ? "carousel__slide is-active" : "carousel__slide"}>
+            {slide.cover ? <img src={slide.cover} alt="" loading={i === 0 ? "eager" : "lazy"} decoding="async" /> : null}
+          </div>
+        ))}
+
+        <button
+          type="button"
+          className="carousel__hit"
+          onClick={() => onOpen(current)}
+          aria-label={current.placeholder ? "封面位待上传" : `打开 ${current.title}`}
+        />
+
+        <div className="carousel__caption">
+          <span className="carousel__badge">
+            {current.placeholder ? "待上传" : kindLabels[current.kind]}
+          </span>
+          <p className="carousel__title">{current.title}</p>
+          <p className="carousel__meta">
+            {current.author}
+            {current.date ? ` · ${current.date}` : ""}
+          </p>
+        </div>
+
+        {slides.length > 1 ? (
+          <>
+            <button
+              type="button"
+              className="carousel__arrow carousel__arrow--prev"
+              onClick={() => go(-1)}
+              aria-label="上一张"
+            >
+              ‹
+            </button>
+            <button
+              type="button"
+              className="carousel__arrow carousel__arrow--next"
+              onClick={() => go(1)}
+              aria-label="下一张"
+            >
+              ›
+            </button>
+            <div className="carousel__dots">
+              {slides.map((slide, i) => (
+                <button
+                  key={slide.id}
+                  type="button"
+                  className={i === index ? "carousel__dot is-active" : "carousel__dot"}
+                  onClick={() => setIndex(i)}
+                  aria-label={`第 ${i + 1} 张`}
+                  aria-current={i === index}
+                />
+              ))}
+            </div>
+          </>
+        ) : null}
+      </div>
+    </div>
+  );
+}
+
 declare global {
   interface Window {
     twikoo?: {
@@ -68,18 +223,41 @@ function loadTwikoo(): Promise<void> {
   });
 }
 
-/** 首页里的分享板块：视频 / 音乐卡片 + 弹层播放 + 预留评论区 */
+/** 首页里的分享板块：轮播 + 封面墙 + 弹层播放 + 预留评论区 */
 export function ShareSection() {
   const [filter, setFilter] = useState<Filter>("all");
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const openerRef = useRef<HTMLElement | null>(null);
 
-  const items = useMemo(
-    () => shareItems.filter((item) => filter === "all" || item.kind === filter),
-    [filter],
+  const displayItems = useMemo(
+    () => (shareItems.length > 0 ? shareItems : placeholderItems()),
+    [],
   );
+  const realItems = shareItems.length > 0;
+
+  const items = useMemo(
+    () => displayItems.filter((item) => filter === "all" || item.kind === filter),
+    [displayItems, filter],
+  );
+
+  const slides = useMemo(() => {
+    const videos = displayItems.filter((item) => item.kind === "video").slice(0, 4);
+    return videos.length > 0 ? videos : displayItems.slice(0, 4);
+  }, [displayItems]);
+
+  const sideItems = useMemo(() => {
+    const videos = displayItems.filter((item) => item.kind === "video").slice(0, 2);
+    const albums = displayItems.filter((item) => item.kind === "music").slice(0, 2);
+    return [...videos, ...albums];
+  }, [displayItems]);
+
   const selected = shareItems.find((item) => item.id === selectedId) ?? null;
   const source = selected ? playerSource(selected) : null;
+
+  const open = (item: ShareItem) => {
+    if (item.placeholder) return;
+    setSelectedId(item.id);
+  };
 
   useEffect(() => {
     if (!selected) return;
@@ -131,9 +309,43 @@ export function ShareSection() {
 
   return (
     <section className="section share" id="share" aria-labelledby="share-title">
-      <p className="section__kicker">Share</p>
-      <h2 id="share-title">分享</h2>
-      <p className="share__lede">看到的、听到的，觉得值得一看一听的都放这儿。想推荐什么，投稿给我。</p>
+      <div className="share__head">
+        <div>
+          <p className="section__kicker">Share</p>
+          <h2 id="share-title">分享</h2>
+        </div>
+        <a className="btn btn--accent share__submit" href={submitHref}>
+          <PlayIcon width={15} height={15} />
+          投稿给我
+        </a>
+      </div>
+
+      <div className="share__hero">
+        <ShareCarousel slides={slides} onOpen={open} />
+        <ul className="share__side">
+          {sideItems.map((item) => (
+            <li key={item.id}>
+              {item.placeholder ? (
+                <div className="share-card share-card--mini share-card--placeholder">
+                  <ShareCardBody item={item} />
+                </div>
+              ) : (
+                <button
+                  type="button"
+                  className="share-card share-card--mini"
+                  onClick={(event) => {
+                    openerRef.current = event.currentTarget;
+                    setSelectedId(item.id);
+                  }}
+                  aria-label={`打开 ${item.title}`}
+                >
+                  <ShareCardBody item={item} />
+                </button>
+              )}
+            </li>
+          ))}
+        </ul>
+      </div>
 
       <div className="share__bar">
         <div className="share__tabs" role="tablist" aria-label="内容类型">
@@ -150,16 +362,19 @@ export function ShareSection() {
             </button>
           ))}
         </div>
-        <a className="btn share__submit" href={submitHref}>
-          <PlayIcon width={15} height={15} />
-          投稿给我
-        </a>
+        <p className="share__count">
+          {realItems ? `共 ${displayItems.length} 个内容` : "占位封面 · 等待上传"}
+        </p>
       </div>
 
-      {items.length > 0 ? (
-        <ul className="share__grid">
-          {items.map((item) => (
-            <li key={item.id}>
+      <ul className="share__grid">
+        {items.map((item) => (
+          <li key={item.id}>
+            {item.placeholder ? (
+              <div className="share-card share-card--placeholder">
+                <ShareCardBody item={item} />
+              </div>
+            ) : (
               <button
                 type="button"
                 className="share-card"
@@ -169,38 +384,12 @@ export function ShareSection() {
                 }}
                 aria-label={`打开 ${item.title}`}
               >
-                <span className="share-card__cover">
-                  {item.cover ? <img src={item.cover} alt="" loading="lazy" decoding="async" /> : null}
-                  <span className="share-card__badge">
-                    {kindLabels[item.kind]} · {platformLabels[item.platform]}
-                  </span>
-                  <span className="share-card__play" aria-hidden="true">
-                    <PlayIcon width={20} height={20} />
-                  </span>
-                </span>
-                <span className="share-card__body">
-                  <span className="share-card__title">{item.title}</span>
-                  <span className="share-card__meta">
-                    {item.author}
-                    {item.date ? ` · ${item.date}` : ""}
-                  </span>
-                  {item.note ? <span className="share-card__note">{item.note}</span> : null}
-                </span>
+                <ShareCardBody item={item} />
               </button>
-            </li>
-          ))}
-        </ul>
-      ) : (
-        <div className="share__empty">
-          <p className="share__empty-title">这里还空着</p>
-          <p className="share__empty-hint">
-            B 站视频、网易云的歌都行。把链接发我，我加进来就能在这看到了。
-          </p>
-          <a className="btn btn--accent" href={submitHref}>
-            发邮件投稿
-          </a>
-        </div>
-      )}
+            )}
+          </li>
+        ))}
+      </ul>
 
       {selected ? (
         <div className="share-modal" role="dialog" aria-modal="true" aria-labelledby="share-modal-title">

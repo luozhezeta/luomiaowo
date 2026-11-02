@@ -18,6 +18,8 @@ export interface ShareItem {
   /** 一句推荐语 */
   note?: string;
   date?: string;
+  /** 没有真实内容时的占位封面 */
+  placeholder?: boolean;
 }
 
 /**
