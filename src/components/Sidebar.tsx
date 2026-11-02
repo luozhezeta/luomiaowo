@@ -72,6 +72,7 @@ export function Sidebar({ current, open, collapsed, onClose }: SidebarProps) {
         <p className="sidebar__label">导航</p>
         {routes.map((route) => {
           const Icon = icons[route.path] ?? HomeIcon;
+          const active = current === route.path || current.startsWith(`${route.path}/`);
           return (
             <Link
               key={route.path}
@@ -80,7 +81,7 @@ export function Sidebar({ current, open, collapsed, onClose }: SidebarProps) {
               onClick={onClose}
               title={route.label}
               aria-label={route.label}
-              aria-current={current === route.path ? "page" : undefined}
+              aria-current={active ? "page" : undefined}
             >
               <Icon />
               <span>{route.label}</span>

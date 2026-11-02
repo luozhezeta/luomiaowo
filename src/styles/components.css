@@ -2435,3 +2435,337 @@
     font-size: 15px;
   }
 }
+
+
+/* ---- 树洞 ---- */
+.treehole {
+  max-width: 780px;
+  padding: clamp(56px, 9vw, 104px) 0 24px;
+}
+
+.treehole__title {
+  font-family: var(--font-display);
+  font-size: clamp(34px, 5vw, 52px);
+  font-weight: 600;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+}
+
+.treehole__lede {
+  max-width: 46ch;
+  margin-top: 14px;
+  color: var(--text-2);
+  font-size: 15px;
+  line-height: 1.8;
+}
+
+.treehole__stats {
+  display: flex;
+  gap: 8px;
+  margin-top: 24px;
+  color: var(--text-3);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.1em;
+}
+
+.treehole__stats strong {
+  color: var(--text-2);
+  font-weight: 600;
+}
+
+.treehole__list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 16px;
+}
+
+.treehole-card {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 20px 22px;
+  border: 1px solid var(--stroke);
+  border-radius: 14px;
+  background: var(--surface-2);
+  color: inherit;
+  text-decoration: none;
+  transition:
+    transform 0.18s ease,
+    border-color 0.18s ease,
+    background 0.18s ease;
+}
+
+.treehole-card:hover {
+  transform: translateY(-2px);
+  border-color: var(--accent-soft);
+  background: var(--surface-3);
+}
+
+.treehole-card:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.treehole-card__main {
+  display: flex;
+  flex: 1;
+  min-width: 0;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.treehole-card__meta {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  color: var(--text-3);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.1em;
+}
+
+.treehole-card__tags {
+  display: inline-flex;
+  gap: 6px;
+}
+
+.treehole-tag {
+  color: var(--accent-text);
+  font-size: 11px;
+}
+
+.treehole-card__title {
+  font-size: 17px;
+  font-weight: 600;
+  line-height: 1.45;
+  letter-spacing: -0.01em;
+  transition: color 0.18s ease;
+}
+
+.treehole-card:hover .treehole-card__title {
+  color: var(--accent-text);
+}
+
+.treehole-card__summary {
+  color: var(--text-2);
+  font-size: 13.5px;
+  line-height: 1.7;
+}
+
+.treehole-card__foot {
+  color: var(--text-3);
+  font-size: 11.5px;
+}
+
+.treehole-card__thumb {
+  flex: none;
+  width: 168px;
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+  border: 1px solid var(--stroke);
+  border-radius: 10px;
+  background: var(--surface-3);
+}
+
+.treehole-card__thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.25s ease;
+}
+
+.treehole-card:hover .treehole-card__thumb img {
+  transform: scale(1.04);
+}
+
+.treehole-card__arrow {
+  color: var(--text-3);
+  transition:
+    transform 0.18s ease,
+    color 0.18s ease;
+}
+
+.treehole-card:hover .treehole-card__arrow {
+  transform: translateX(3px);
+  color: var(--accent-text);
+}
+
+/* ---- 树洞文章详情 ---- */
+.article {
+  display: block;
+  max-width: 720px;
+  padding: clamp(48px, 7vw, 88px) 0 24px;
+}
+
+.article__back {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--text-3);
+  font-size: 12.5px;
+  text-decoration: none;
+  transition: color 0.18s ease;
+}
+
+.article__back:hover {
+  color: var(--accent-text);
+}
+
+.article__head {
+  margin-top: 22px;
+}
+
+.article__meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 0;
+  color: var(--text-3);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.1em;
+}
+
+.article__title {
+  margin: 12px 0 0;
+  font-size: clamp(26px, 4vw, 38px);
+  font-weight: 600;
+  line-height: 1.25;
+  letter-spacing: -0.02em;
+}
+
+.article__tags {
+  display: flex;
+  gap: 8px;
+  margin: 14px 0 0;
+}
+
+.article__cover {
+  display: block;
+  width: 100%;
+  height: auto;
+  margin-top: 24px;
+  border: 1px solid var(--stroke);
+  border-radius: 12px;
+}
+
+.article__body {
+  margin-top: 26px;
+}
+
+.article__body p {
+  margin: 0 0 20px;
+  color: var(--text-2);
+  font-size: 15.5px;
+  line-height: 2;
+}
+
+.article__body::after {
+  display: block;
+  clear: both;
+  content: "";
+}
+
+.article__figure {
+  margin: 26px 0;
+}
+
+.article__figure img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border: 1px solid var(--stroke);
+  border-radius: 12px;
+}
+
+.article__figure figcaption {
+  margin-top: 8px;
+  color: var(--text-3);
+  font-size: 12px;
+  line-height: 1.6;
+  text-align: center;
+}
+
+/* left / right：图片浮起来，文字自动绕排 */
+.article__figure--left,
+.article__figure--right {
+  width: min(320px, 46%);
+}
+
+.article__figure--left {
+  float: left;
+  margin: 6px 22px 14px 0;
+  clear: left;
+}
+
+.article__figure--right {
+  float: right;
+  margin: 6px 0 14px 22px;
+  clear: right;
+}
+
+.article__foot {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 40px;
+  padding-top: 22px;
+  border-top: 1px solid var(--stroke);
+}
+
+.article__nav {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 14px 16px;
+  border: 1px solid var(--stroke);
+  border-radius: 12px;
+  background: var(--surface-2);
+  color: inherit;
+  text-decoration: none;
+  transition:
+    border-color 0.18s ease,
+    background 0.18s ease;
+}
+
+.article__nav:hover {
+  border-color: var(--accent-soft);
+  background: var(--surface-3);
+}
+
+.article__nav--end {
+  text-align: right;
+}
+
+.article__nav-label {
+  color: var(--text-3);
+  font-size: 11px;
+  letter-spacing: 0.12em;
+}
+
+.article__nav-title {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+@media (max-width: 640px) {
+  .treehole-card {
+    gap: 12px;
+    padding: 16px;
+  }
+
+  .treehole-card__thumb {
+    width: 104px;
+  }
+
+  .treehole-card__arrow {
+    display: none;
+  }
+
+  .article__body p {
+    font-size: 15px;
+  }
+}

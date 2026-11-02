@@ -7,6 +7,9 @@ import { PlaceholderPage } from "./pages/PlaceholderPage";
 import { HomePage } from "./pages/HomePage";
 import { ProfilePage } from "./pages/ProfilePage";
 import { ThanksPage } from "./pages/ThanksPage";
+import { TreeHolePage } from "./pages/TreeHolePage";
+import { TreeHolePostPage } from "./pages/TreeHolePostPage";
+import { findTreeHolePost } from "./data/treehole";
 import { useBackground } from "./hooks/useBackground";
 import { Link, usePath } from "./router";
 import { matchRoute } from "./routes";
@@ -36,6 +39,8 @@ function readCollapsed(): boolean {
 export default function App() {
   const path = usePath();
   const route = matchRoute(path);
+  const postId = path.startsWith("/shudong/") ? path.slice("/shudong/".length) : "";
+  const post = postId ? findTreeHolePost(postId) : undefined;
   const [menuOpen, setMenuOpen] = useState(false);
   const [collapsed, setCollapsed] = useState(readCollapsed);
   const { url: backgroundUrl, ready: backgroundReady } = useBackground();
@@ -43,8 +48,8 @@ export default function App() {
   const closeMenu = useCallback(() => setMenuOpen(false), []);
 
   useEffect(() => {
-    document.title = route?.title ?? "页面不存在 · 洛哲";
-  }, [route]);
+    document.title = post ? `${post.title} · 洛哲` : (route?.title ?? "页面不存在 · 洛哲");
+  }, [post, route]);
 
   useEffect(() => {
     setMenuOpen(false);
@@ -118,6 +123,23 @@ export default function App() {
           <main id="main" key={path} className="route">
             {path === "/" || path === "/share" ? (
               <HomePage />
+            ) : postId ? (
+              post ? (
+                <TreeHolePostPage post={post} />
+              ) : (
+                <PlaceholderPage
+                  kicker="404"
+                  title="没找到这篇文章"
+                  lede="链接可能写错了，也可能这篇已经删掉。"
+                  action={
+                    <Link className="btn btn--accent" to="/shudong">
+                      回树洞
+                    </Link>
+                  }
+                />
+              )
+            ) : route?.path === "/shudong" ? (
+              <TreeHolePage />
             ) : route?.path === "/profile" ? (
               <ProfilePage />
             ) : route?.path === "/thanks" ? (
