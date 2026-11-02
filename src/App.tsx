@@ -5,6 +5,7 @@ import { Footer } from "./components/Footer";
 import { PanelLeftIcon } from "./components/Icons";
 import { PlaceholderPage } from "./pages/PlaceholderPage";
 import { ProfilePage } from "./pages/ProfilePage";
+import { SharePage } from "./pages/SharePage";
 import { ThanksPage } from "./pages/ThanksPage";
 import { useBackground } from "./hooks/useBackground";
 import { Link, usePath } from "./router";
@@ -119,6 +120,8 @@ export default function App() {
               <ProfilePage />
             ) : route?.path === "/thanks" ? (
               <ThanksPage />
+            ) : route?.path === "/share" ? (
+              <SharePage />
             ) : route ? (
               <PlaceholderPage
                 kicker={headings[route.path] ? undefined : route.kicker}

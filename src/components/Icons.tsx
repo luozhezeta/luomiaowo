@@ -190,3 +190,12 @@ export function HeartIcon(props: Props) {
     </svg>
   );
 }
+
+export function PlayIcon(props: Props) {
+  return (
+    <svg {...base} {...props}>
+      <circle cx="12" cy="12" r="8.6" />
+      <path d="M10.3 9.1 15.6 12l-5.3 2.9V9.1Z" fill="currentColor" stroke="none" />
+    </svg>
+  );
+}

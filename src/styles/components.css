@@ -1823,3 +1823,360 @@
     flex: 1 1 auto;
   }
 }
+
+/* ============================================================
+   分享
+   ============================================================ */
+.share {
+  max-width: 980px;
+  padding: clamp(56px, 9vw, 104px) 0 24px;
+}
+
+.share__title {
+  font-family: var(--font-display);
+  font-size: clamp(34px, 5vw, 52px);
+  font-weight: 600;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+}
+
+.share__lede {
+  margin-top: 14px;
+  max-width: 52ch;
+  font-size: 15px;
+  line-height: 1.8;
+  color: var(--text-2);
+}
+
+.share__bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+  margin-top: 30px;
+}
+
+.share__tabs {
+  display: inline-flex;
+  gap: 2px;
+  padding: 3px;
+  border: 1px solid var(--stroke);
+  border-radius: 999px;
+  background: var(--surface-2);
+}
+
+.share__tab {
+  padding: 6px 14px;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  color: var(--text-3);
+  font: inherit;
+  font-size: 13px;
+  cursor: pointer;
+  transition:
+    background 0.12s ease,
+    color 0.12s ease;
+}
+
+.share__tab:hover {
+  color: var(--text-2);
+}
+
+.share__tab[aria-selected="true"] {
+  background: var(--surface-solid);
+  color: var(--text);
+  box-shadow:
+    0 1px 2px rgb(0 0 0 / 0.16),
+    inset 0 0 0 1px var(--stroke);
+}
+
+.share__submit {
+  margin-left: auto;
+}
+
+.share__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 14px;
+  margin: 20px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.share-card {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  padding: 0;
+  overflow: hidden;
+  border: 1px solid var(--stroke);
+  border-radius: var(--r-card);
+  background: var(--surface-2);
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+  transition:
+    transform 0.14s ease,
+    border-color 0.14s ease,
+    background 0.14s ease;
+}
+
+.share-card:hover {
+  transform: translateY(-2px);
+  border-color: var(--stroke-strong);
+  background: var(--surface-3);
+}
+
+.share-card:focus-visible {
+  outline: 2px solid var(--accent-text);
+  outline-offset: 2px;
+}
+
+.share-card__cover {
+  position: relative;
+  display: block;
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+  background: linear-gradient(150deg, var(--surface-3), var(--surface-2));
+}
+
+.share-card__cover img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.share-card__badge {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  padding: 3px 8px;
+  border-radius: 999px;
+  background: rgb(0 0 0 / 0.55);
+  color: #fff;
+  font-size: 11px;
+  letter-spacing: 0.02em;
+  backdrop-filter: blur(6px);
+}
+
+.share-card__play {
+  position: absolute;
+  right: 10px;
+  bottom: 10px;
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: rgb(0 0 0 / 0.5);
+  color: #fff;
+  backdrop-filter: blur(6px);
+  opacity: 0;
+  transform: translateY(4px);
+  transition:
+    opacity 0.14s ease,
+    transform 0.14s ease;
+}
+
+.share-card:hover .share-card__play,
+.share-card:focus-visible .share-card__play {
+  opacity: 1;
+  transform: none;
+}
+
+.share-card__body {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 12px 14px 15px;
+}
+
+.share-card__title {
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.45;
+}
+
+.share-card__meta {
+  font-size: 11.5px;
+  color: var(--text-3);
+}
+
+.share-card__note {
+  display: -webkit-box;
+  margin-top: 2px;
+  overflow: hidden;
+  color: var(--text-2);
+  font-size: 12.5px;
+  line-height: 1.65;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+
+.share__empty {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+  margin-top: 22px;
+  padding: 28px;
+  border: 1px dashed var(--stroke-strong);
+  border-radius: var(--r-card);
+  background: var(--surface-2);
+}
+
+.share__empty-title {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.share__empty-hint {
+  margin: 0;
+  max-width: 46ch;
+  font-size: 13px;
+  line-height: 1.75;
+  color: var(--text-3);
+}
+
+/* 分享详情弹层 */
+.share-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 80;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+}
+
+.share-modal__scrim {
+  position: absolute;
+  inset: 0;
+  padding: 0;
+  border: 0;
+  background: rgb(0 0 0 / 0.62);
+}
+
+.share-modal__panel {
+  position: relative;
+  width: min(760px, 100%);
+  max-height: min(88vh, 860px);
+  overflow-y: auto;
+  padding: 20px;
+  border: 1px solid var(--stroke-strong);
+  border-radius: 12px;
+  background: var(--surface-solid);
+  box-shadow: var(--shadow);
+  animation: modal-in 0.22s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+
+.share-modal__head {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+}
+
+.share-modal__head h2 {
+  margin: 0;
+  font-size: 17px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+.share-modal__head p {
+  margin: 4px 0 0;
+  font-size: 12.5px;
+  color: var(--text-3);
+}
+
+.share-modal__close {
+  margin-left: auto;
+}
+
+.share-player {
+  aspect-ratio: 16 / 9;
+  margin-top: 16px;
+  overflow: hidden;
+  border-radius: 10px;
+  background: #000;
+}
+
+.share-player iframe,
+.share-player video {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+.share-player--bar {
+  height: auto;
+  aspect-ratio: auto;
+  padding: 8px 0;
+  background: var(--surface-3);
+}
+
+.share-player--bar iframe,
+.share-player--bar audio {
+  width: 100%;
+  height: 86px;
+  border: 0;
+}
+
+.share-player__hint {
+  margin: 0;
+  padding: 26px 18px;
+  color: var(--text-2);
+  font-size: 13px;
+  line-height: 1.7;
+  text-align: center;
+}
+
+.share-modal__note {
+  margin: 14px 0 0;
+  color: var(--text-2);
+  font-size: 13px;
+  line-height: 1.8;
+}
+
+.share-modal__links {
+  display: flex;
+  gap: 8px;
+  margin-top: 14px;
+}
+
+.share-comments {
+  margin-top: 20px;
+  padding-top: 16px;
+  border-top: 1px solid var(--stroke);
+}
+
+.share-comments h3 {
+  margin: 0 0 10px;
+  color: var(--text-2);
+  font-size: 13.5px;
+  font-weight: 600;
+}
+
+.share-comments__hint {
+  margin: 0;
+  color: var(--text-3);
+  font-size: 12.5px;
+}
+
+@media (max-width: 640px) {
+  .share__submit {
+    margin-left: 0;
+  }
+
+  .share__grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+
+  .share-card__title {
+    font-size: 13px;
+  }
+}
