@@ -1,11 +1,6 @@
 import { site } from "../data/site";
 import { Reveal } from "./Reveal";
-import {
-  ArrowRightIcon,
-  ArrowUpRightIcon,
-  GithubIcon,
-  MailIcon,
-} from "./Icons";
+import { ArrowUpRightIcon, GithubIcon, MailIcon } from "./Icons";
 
 export function Hero() {
   return (
@@ -25,10 +20,6 @@ export function Hero() {
         <p className="hero__lede">{site.intro}</p>
 
         <div className="hero__actions">
-          <a className="btn btn--accent" href="#projects">
-            查看项目
-            <ArrowRightIcon width={15} height={15} />
-          </a>
           <a className="btn" href="#about">
             关于我
           </a>

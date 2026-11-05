@@ -1,5 +1,4 @@
 import { site } from "../data/site";
-import { Reveal } from "./Reveal";
 import { ChatIcon, ChevronDownIcon, GithubIcon, MailIcon } from "./Icons";
 
 export function About() {
@@ -24,15 +23,6 @@ export function About() {
           </div>
         </div>
 
-        <Reveal className="card about__panel">
-          <h3>常用工具</h3>
-          <ul className="tags">
-            {site.skills.map((skill) => (
-              <li key={skill}>{skill}</li>
-            ))}
-          </ul>
-          <p className="about__note">现在在学 Rust，目标是明年用 Tauri 重写自己的桌面工具箱。</p>
-        </Reveal>
       </div>
 
       <details className="about__more">

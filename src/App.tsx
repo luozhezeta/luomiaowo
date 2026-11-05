@@ -23,7 +23,7 @@ const placeholders: Record<string, string> = {
 const headings: Record<string, { title?: string; subtitle?: string }> = {
   "/": { title: "洛喵窝", subtitle: "Luo Tianyi's fans' den" },
   "/shudong": { subtitle: "Tree Hole" },
-  "/games": { subtitle: "Games" },
+  "/games": {},
 };
 
 const SIDEBAR_KEY = "luozhe-sidebar";
@@ -146,7 +146,7 @@ export default function App() {
               <ThanksPage />
             ) : route ? (
               <PlaceholderPage
-                kicker={headings[route.path] ? undefined : route.kicker}
+                kicker={route.kicker}
                 title={headings[route.path]?.title ?? route.label}
                 subtitle={headings[route.path]?.subtitle}
                 lede={placeholders[route.path] ?? ""}

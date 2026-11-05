@@ -1,15 +1,11 @@
 import { Hero } from "../components/Hero";
-import { Projects } from "../components/Projects";
-import { Posts } from "../components/Posts";
 import { About } from "../components/About";
 
 export function ProfilePage() {
   return (
-    <>
+    <div className="page-wrap">
       <Hero />
-      <Projects />
-      <Posts />
       <About />
-    </>
+    </div>
   );
 }

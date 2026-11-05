@@ -489,7 +489,7 @@
   grid-template-columns: minmax(0, 1.15fr) minmax(300px, 0.85fr);
   align-items: center;
   gap: 56px;
-  padding: 88px 0 64px;
+  padding: 75px 0 64px;
 }
 
 .hero__copy > * {
@@ -922,10 +922,7 @@
    关于
    ============================================================ */
 .about {
-  display: grid;
-  grid-template-columns: minmax(0, 1.1fr) minmax(280px, 0.9fr);
-  align-items: start;
-  gap: 40px;
+  display: block;
 }
 
 .about__text {
@@ -941,24 +938,6 @@
   flex-wrap: wrap;
   gap: 10px;
   margin-top: 22px;
-}
-
-.about__panel {
-  padding: 20px;
-}
-
-.about__panel:hover {
-  border-color: var(--stroke);
-  box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.045);
-  transform: none;
-}
-
-.about__panel h3 {
-  margin-bottom: 12px;
-  font-size: 13px;
-  font-weight: 600;
-  letter-spacing: 0.02em;
-  color: var(--text-2);
 }
 
 .about__note {
@@ -1069,7 +1048,7 @@
 }
 
 .placeholder {
-  max-width: 820px;
+  max-width: var(--content-w);
   margin-inline: auto;
   padding: clamp(56px, 9vw, 104px) 0 24px;
 }
@@ -1368,8 +1347,14 @@
    特别鸣谢
    ============================================================ */
 .thanks {
-  max-width: 900px;
+  max-width: var(--content-w);
+  margin-inline: auto;
   padding: clamp(56px, 9vw, 104px) 0 24px;
+}
+
+.page-wrap {
+  max-width: var(--content-w);
+  margin-inline: auto;
 }
 
 .thanks__title {
@@ -2442,7 +2427,7 @@
 
 /* ---- 树洞 ---- */
 .treehole {
-  max-width: 780px;
+  max-width: var(--content-w);
   margin-inline: auto;
   padding: clamp(56px, 9vw, 104px) 0 24px;
 }
@@ -2600,7 +2585,7 @@
 /* ---- 树洞文章详情 ---- */
 .article {
   display: block;
-  max-width: 720px;
+  max-width: var(--content-w);
   margin-inline: auto;
   padding: clamp(48px, 7vw, 88px) 0 24px;
 }
@@ -2795,4 +2780,268 @@
   .share-card--mini .share-card__cover {
     aspect-ratio: 16 / 9;
   }
+}
+
+/* ---- 粉丝群 ---- */
+.home__top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.home__intro {
+  min-width: 0;
+}
+
+.home__groups-wrap {
+  position: relative;
+  display: inline-flex;
+  flex: none;
+  margin-top: 4px;
+}
+
+.home__groups {
+  flex: none;
+}
+
+.home__groups-tip {
+  position: absolute;
+  top: calc(100% + 10px);
+  right: 0;
+  z-index: 20;
+  padding: 6px 10px;
+  border: 1px solid var(--stroke);
+  border-radius: 8px;
+  background: var(--surface-solid);
+  box-shadow: var(--shadow);
+  color: var(--text-2);
+  font-size: 12px;
+  line-height: 1.4;
+  white-space: nowrap;
+  opacity: 0;
+  transform: translateY(-4px);
+  pointer-events: none;
+  transition:
+    opacity 0.16s ease,
+    transform 0.16s ease;
+}
+
+.home__groups-tip::before {
+  position: absolute;
+  top: -5px;
+  right: 18px;
+  width: 8px;
+  height: 8px;
+  border-top: 1px solid var(--stroke);
+  border-left: 1px solid var(--stroke);
+  background: var(--surface-solid);
+  content: "";
+  transform: rotate(45deg);
+}
+
+.home__groups-wrap:hover .home__groups-tip,
+.home__groups-wrap:focus-within .home__groups-tip {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.home__groups-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: currentColor;
+  opacity: 0.85;
+}
+
+.groups {
+  display: flex;
+  flex-direction: column;
+  width: min(820px, 100%);
+  overflow: hidden;
+}
+
+.groups__head {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.groups__head h2 {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+.groups__count {
+  margin: 4px 0 0;
+  color: var(--text-3);
+  font-size: 12px;
+}
+
+.groups__search {
+  margin-top: 12px;
+  padding: 9px 12px;
+  border: 1px solid var(--stroke);
+  border-radius: 8px;
+  background: var(--surface-2);
+  color: var(--text);
+  font: inherit;
+  font-size: 13px;
+}
+
+.groups__search:focus-visible {
+  border-color: var(--accent);
+  outline: 2px solid var(--accent-soft);
+  outline-offset: 1px;
+}
+
+.groups__body {
+  flex: 1;
+  min-height: 0;
+  margin-top: 6px;
+  padding-right: 4px;
+  overflow-y: auto;
+}
+
+.groups__section {
+  margin-top: 18px;
+}
+
+.groups__section-title {
+  margin: 0 0 6px;
+  color: var(--text-2);
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.groups__text {
+  margin: 0 0 6px;
+  color: var(--text-3);
+  font-size: 12px;
+  line-height: 1.7;
+}
+
+.groups__block {
+  margin-top: 12px;
+}
+
+.groups__block-title {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  margin: 0 0 6px;
+  color: var(--accent-text);
+  font-size: 12.5px;
+  font-weight: 600;
+}
+
+.groups__block-date {
+  color: var(--text-3);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 400;
+}
+
+.groups__rows {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.group-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto 3.4em;
+  align-items: center;
+  gap: 10px;
+  padding: 7px 10px;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  background: var(--surface-2);
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.group-row:hover {
+  border-color: var(--accent-soft);
+  background: var(--surface-3);
+}
+
+.group-row:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 1px;
+}
+
+.group-row__name {
+  overflow: hidden;
+  font-size: 12.5px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.group-row__note {
+  color: var(--text-3);
+  font-size: 11.5px;
+}
+
+.group-row__qq {
+  color: var(--text-2);
+  font-family: var(--font-mono);
+  font-size: 12px;
+}
+
+.group-row__copy {
+  color: var(--text-3);
+  font-size: 11px;
+  text-align: right;
+  opacity: 0;
+}
+
+.group-row:hover .group-row__copy,
+.group-row:focus-visible .group-row__copy {
+  opacity: 1;
+}
+
+.groups__empty {
+  margin: 20px 0;
+  color: var(--text-3);
+  font-size: 12.5px;
+}
+
+@media (max-width: 640px) {
+  .groups {
+    width: 100%;
+  }
+
+  .group-row {
+    grid-template-columns: minmax(0, 1fr) auto;
+  }
+
+  .group-row__copy {
+    display: none;
+  }
+}
+
+
+/* 统一容器内，正文/卡片保持可读宽度，左边缘和标题对齐 */
+.treehole__list {
+  max-width: 820px;
+}
+
+.placeholder__frame {
+  max-width: 820px;
+}
+
+.article__head,
+.article__body,
+.article__foot {
+  max-width: 760px;
+}
+
+.thanks .credits {
+  max-width: 900px;
 }
