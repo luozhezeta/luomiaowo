@@ -2,6 +2,7 @@
    设计 token —— 改这里就能换配色
    ============================================================ */
 :root {
+  --content-w: 1320px;
   color-scheme: dark;
 
   --font-sans: "Segoe UI Variable Text", "Segoe UI", system-ui, -apple-system,
